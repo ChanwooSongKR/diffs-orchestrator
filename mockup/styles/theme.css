@@ -193,6 +193,47 @@ button { cursor: pointer; }
   flex-direction: column;
 }
 
+/* ─── LLM Select ────────────────────────────── */
+
+.llm-select-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px 6px 10px;
+  border: 1px solid var(--border-default);
+  border-radius: 999px;
+  background: var(--surface-raised);
+  box-shadow: var(--shadow-sm);
+  transition: border-color 0.2s var(--ease-out);
+}
+
+.llm-select-wrap:focus-within {
+  border-color: var(--accent-border);
+}
+
+.llm-select-icon {
+  font-size: 12px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.llm-select {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: 'DM Sans', -apple-system, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 14px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%239E9790' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0px center;
+}
+
 /* ─── Shared Labels ──────────────────────────── */
 
 .eyebrow, .panel-kicker {

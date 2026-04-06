@@ -224,7 +224,7 @@ function renderStatusRail(tasks, selectedTaskId, state) {
     const isActive = task.id === selectedTaskId ? " is-active" : "";
     const agentCount = task.agents?.length ?? 0;
     const agentLabel = meta.indicator === "pulse" && agentCount > 0
-      ? `<span class="status-rail-item__agents">${escapeHtml(String(agentCount))}개 에이전트 작동 중</span>`
+      ? `<span class="status-rail-item__agents">${normalizeArray(task.agents).map(a => `· ${escapeHtml(a)}`).join("<br>")}</span>`
       : "";
 
     return `

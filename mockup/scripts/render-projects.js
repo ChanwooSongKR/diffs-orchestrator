@@ -89,7 +89,6 @@ export function renderProjectsView(state) {
     <section class="launcher" aria-label="Project management launcher">
       <header class="launcher__topbar">
         <div class="launcher__heading">
-          <p class="eyebrow">Project Management</p>
           <h1>Projects</h1>
         </div>
         <button type="button" class="button button--primary" data-action="create-project-button">
