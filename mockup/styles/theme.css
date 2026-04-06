@@ -138,7 +138,7 @@ button { cursor: pointer; }
 
 .brand--btn:hover { background: var(--surface-overlay); }
 
-.brand img { height: 26px; width: auto; display: block; }
+.brand img { height: 26px; width: auto; display: block; filter: brightness(0); }
 
 .brand-tagline {
   font-family: 'Caveat', cursive;
