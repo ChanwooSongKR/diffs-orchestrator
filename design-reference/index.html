@@ -1,0 +1,530 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Design Reference</title>
+    <style>
+      :root {
+        --app-bg: #0a0a0a;
+        --app-surface: #141414;
+        --app-surface-2: #1a1a1a;
+        --app-surface-3: #1e1e1e;
+        --app-border: #2a2a2a;
+        --app-border-light: #333333;
+        --app-text: #ffffff;
+        --app-text-muted: #999999;
+        --app-text-dim: #555555;
+        --accent-blue: #2563eb;
+        --accent-purple: rgba(147, 51, 234, 0.28);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+        background:
+          radial-gradient(circle at top left, rgba(255, 255, 255, 0.04), transparent 24%),
+          radial-gradient(circle at bottom right, rgba(255, 255, 255, 0.03), transparent 22%),
+          var(--app-bg);
+        color: var(--app-text);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+      }
+
+      body {
+        padding: 24px;
+      }
+
+      .app-shell {
+        min-height: calc(100vh - 48px);
+        border: 1px solid var(--app-border);
+        border-radius: 28px;
+        overflow: hidden;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.01), rgba(255, 255, 255, 0)),
+          var(--app-bg);
+        box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+      }
+
+      .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 18px 24px;
+        border-bottom: 1px solid var(--app-border);
+        background: rgba(20, 20, 20, 0.92);
+        backdrop-filter: blur(18px);
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+
+      .brand img {
+        height: 24px;
+      }
+
+      .brand-copy strong {
+        display: block;
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      .brand-copy span {
+        display: block;
+        margin-top: 2px;
+        font-size: 11px;
+        color: var(--app-text-dim);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .topbar-meta {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .pill,
+      .avatar-chip {
+        border: 1px solid var(--app-border);
+        background: var(--app-surface);
+        color: var(--app-text-muted);
+        border-radius: 999px;
+        padding: 9px 14px;
+        font-size: 12px;
+      }
+
+      .avatar-chip {
+        color: var(--app-text);
+      }
+
+      .layout {
+        display: grid;
+        grid-template-columns: 320px minmax(0, 1fr) 360px;
+        min-height: calc(100vh - 121px);
+      }
+
+      .panel {
+        padding: 22px;
+      }
+
+      .panel + .panel {
+        border-left: 1px solid var(--app-border);
+      }
+
+      .section-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 0 0 14px;
+        font-size: 13px;
+        color: var(--app-text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+      }
+
+      .surface {
+        background: var(--app-surface);
+        border: 1px solid var(--app-border);
+        border-radius: 20px;
+      }
+
+      .search-box {
+        padding: 16px;
+      }
+
+      .search-box textarea {
+        width: 100%;
+        min-height: 108px;
+        border: 0;
+        resize: none;
+        outline: none;
+        background: transparent;
+        color: var(--app-text);
+        font: inherit;
+        line-height: 1.6;
+      }
+
+      .search-box textarea::placeholder {
+        color: var(--app-text-dim);
+      }
+
+      .search-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 14px;
+      }
+
+      .ghost-row {
+        display: flex;
+        gap: 8px;
+      }
+
+      .ghost,
+      .primary,
+      .chip {
+        border-radius: 12px;
+        border: 1px solid var(--app-border);
+        background: var(--app-surface-2);
+        color: var(--app-text-muted);
+        padding: 10px 12px;
+        font-size: 12px;
+      }
+
+      .primary {
+        background: var(--app-text);
+        color: #0a0a0a;
+        border-color: transparent;
+        font-weight: 600;
+      }
+
+      .selection-grid,
+      .result-grid {
+        display: grid;
+        gap: 12px;
+      }
+
+      .selection-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .thumb {
+        position: relative;
+        aspect-ratio: 1 / 1;
+        border-radius: 18px;
+        overflow: hidden;
+        border: 1px solid var(--app-border);
+        background:
+          linear-gradient(160deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.02)),
+          linear-gradient(135deg, #252525, #121212);
+      }
+
+      .thumb::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.5));
+      }
+
+      .thumb-label {
+        position: absolute;
+        left: 10px;
+        bottom: 10px;
+        z-index: 1;
+        font-size: 11px;
+        color: rgba(255, 255, 255, 0.88);
+      }
+
+      .check {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 1;
+        width: 22px;
+        height: 22px;
+        border-radius: 999px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        background: var(--accent-blue);
+      }
+
+      .result-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        margin-top: 18px;
+      }
+
+      .result-card {
+        position: relative;
+        aspect-ratio: 1 / 1;
+        border-radius: 18px;
+        overflow: hidden;
+        border: 1px solid var(--app-border);
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.1), transparent 45%),
+          linear-gradient(145deg, #343434, #161616 52%, #101010);
+      }
+
+      .result-card.featured {
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08), 0 0 0 1px rgba(37, 99, 235, 0.24);
+      }
+
+      .result-card .meta {
+        position: absolute;
+        left: 10px;
+        right: 10px;
+        bottom: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 1;
+      }
+
+      .tag {
+        background: rgba(0, 0, 0, 0.52);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        color: rgba(255, 255, 255, 0.82);
+        border-radius: 999px;
+        padding: 5px 8px;
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      .workflow {
+        display: grid;
+        gap: 14px;
+      }
+
+      .prompt-card,
+      .settings-card,
+      .preview-card {
+        padding: 16px;
+      }
+
+      .prompt-card p {
+        margin: 0;
+        color: var(--app-text-muted);
+        font-size: 14px;
+        line-height: 1.7;
+      }
+
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 14px;
+      }
+
+      .chip.active {
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--app-text);
+        border-color: var(--app-border-light);
+      }
+
+      .preview-frame {
+        aspect-ratio: 4 / 5;
+        border-radius: 20px;
+        overflow: hidden;
+        border: 1px solid var(--app-border);
+        background:
+          radial-gradient(circle at 20% 20%, rgba(147, 51, 234, 0.32), transparent 28%),
+          radial-gradient(circle at 80% 10%, rgba(37, 99, 235, 0.24), transparent 24%),
+          linear-gradient(180deg, #272727, #111111);
+        position: relative;
+      }
+
+      .preview-frame::before {
+        content: "Generated Preview";
+        position: absolute;
+        top: 14px;
+        left: 14px;
+        padding: 6px 9px;
+        border-radius: 999px;
+        background: rgba(0, 0, 0, 0.48);
+        color: rgba(255, 255, 255, 0.82);
+        font-size: 10px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .preview-frame::after {
+        content: "";
+        position: absolute;
+        inset: auto 16px 16px 16px;
+        height: 96px;
+        border-radius: 18px;
+        background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.55));
+      }
+
+      .footer-note {
+        margin-top: 14px;
+        color: var(--app-text-dim);
+        font-size: 12px;
+        line-height: 1.6;
+      }
+
+      @media (max-width: 1200px) {
+        .layout {
+          grid-template-columns: 1fr;
+        }
+
+        .panel + .panel {
+          border-left: 0;
+          border-top: 1px solid var(--app-border);
+        }
+      }
+
+      @media (max-width: 720px) {
+        body {
+          padding: 12px;
+        }
+
+        .app-shell {
+          border-radius: 20px;
+        }
+
+        .topbar {
+          padding: 16px;
+          gap: 14px;
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .topbar-meta {
+          flex-wrap: wrap;
+        }
+
+        .selection-grid,
+        .result-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div class="brand">
+          <img src="../frontend/public/diffs_logo.png" alt="Diffs logo" />
+          <div class="brand-copy">
+            <strong>Image Agent</strong>
+            <span>Hybrid Search Workspace</span>
+          </div>
+        </div>
+        <div class="topbar-meta">
+          <div class="pill">"editorial chrome object shot" - 248 results</div>
+          <div class="avatar-chip">Chanwoo</div>
+        </div>
+      </header>
+
+      <section class="layout">
+        <aside class="panel">
+          <h2 class="section-title">
+            <span>Search Input</span>
+            <span>01</span>
+          </h2>
+          <div class="surface search-box">
+            <textarea placeholder="검색어를 입력해 레퍼런스를 찾습니다.">polished consumer tech product, soft studio reflection, premium editorial feel</textarea>
+            <div class="search-actions">
+              <div class="ghost-row">
+                <button class="ghost">Browse All</button>
+                <button class="ghost">Upload Ref</button>
+              </div>
+              <button class="primary">Search</button>
+            </div>
+          </div>
+
+          <h2 class="section-title" style="margin-top: 22px;">
+            <span>Selected Refs</span>
+            <span>03 / 10</span>
+          </h2>
+          <div class="selection-grid">
+            <div class="thumb">
+              <div class="check"></div>
+              <div class="thumb-label">Tone Reference</div>
+            </div>
+            <div class="thumb">
+              <div class="check"></div>
+              <div class="thumb-label">Angle Reference</div>
+            </div>
+            <div class="thumb">
+              <div class="check"></div>
+              <div class="thumb-label">Material Detail</div>
+            </div>
+            <div class="thumb" style="display: grid; place-items: center; color: var(--app-text-dim);">
+              + Add
+            </div>
+          </div>
+        </aside>
+
+        <section class="panel">
+          <h2 class="section-title">
+            <span>Search Results</span>
+            <span>Hybrid + Reranking</span>
+          </h2>
+          <div class="result-grid">
+            <article class="result-card featured">
+              <div class="meta">
+                <span class="tag">rank 01</span>
+                <span class="tag">select</span>
+              </div>
+            </article>
+            <article class="result-card">
+              <div class="meta">
+                <span class="tag">rank 02</span>
+                <span class="tag">info</span>
+              </div>
+            </article>
+            <article class="result-card">
+              <div class="meta">
+                <span class="tag">rank 03</span>
+                <span class="tag">info</span>
+              </div>
+            </article>
+            <article class="result-card">
+              <div class="meta">
+                <span class="tag">rank 04</span>
+                <span class="tag">tone</span>
+              </div>
+            </article>
+            <article class="result-card">
+              <div class="meta">
+                <span class="tag">rank 05</span>
+                <span class="tag">metal</span>
+              </div>
+            </article>
+            <article class="result-card">
+              <div class="meta">
+                <span class="tag">rank 06</span>
+                <span class="tag">light</span>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <aside class="panel">
+          <h2 class="section-title">
+            <span>Generation</span>
+            <span>02</span>
+          </h2>
+          <div class="workflow">
+            <section class="surface prompt-card">
+              <p>
+                matte black portable speaker floating above a charcoal pedestal, subtle rim light,
+                luxury campaign photography, crisp reflections, clean studio composition
+              </p>
+              <div class="chips">
+                <span class="chip active">1:1</span>
+                <span class="chip">4K</span>
+                <span class="chip active">1 image</span>
+                <span class="chip">tone injected</span>
+              </div>
+            </section>
+
+            <section class="surface preview-card">
+              <div class="preview-frame"></div>
+            </section>
+
+            <section class="surface settings-card">
+              <div class="chips">
+                <span class="chip active">Search-linked</span>
+                <span class="chip">History-aware</span>
+                <span class="chip">Regen Ready</span>
+              </div>
+              <p class="footer-note">
+                이 HTML은 현재 프론트엔드의 다크 인터페이스 토큰, 얇은 보더, 라운드 카드, 검색-선택-생성
+                3단 구조를 참고용으로 고정한 디자인 레퍼런스입니다.
+              </p>
+            </section>
+          </div>
+        </aside>
+      </section>
+    </main>
+  </body>
+</html>

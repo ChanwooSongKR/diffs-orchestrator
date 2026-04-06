@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Diffs Orchestrator Mockup</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles/theme.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <button type="button" class="brand brand--btn" data-action="go-home">
+          <img src="../design-reference/diffs_logo.png" alt="Diffs" />
+          <span class="brand-tagline">광고 생성 플랫폼</span>
+        </button>
+      </header>
+      <main id="app"></main>
+    </div>
+    <script type="module" src="./scripts/main.js"></script>
+    <script>
+      // Scroll-reveal: .reveal 클래스가 뷰포트에 들어오면 애니메이션 트리거
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry, i) => {
+            if (entry.isIntersecting) {
+              entry.target.style.animationDelay = `${i * 40}ms`;
+              entry.target.classList.add('reveal');
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1, rootMargin: '0px 0px -32px 0px' }
+      );
+
+      // DOM 변화 감지 → 새로 렌더된 카드에 reveal 적용
+      const mutationObserver = new MutationObserver(() => {
+        document.querySelectorAll('.folder-card:not(.reveal), .task-item:not(.reveal)').forEach(el => {
+          observer.observe(el);
+        });
+      });
+
+      mutationObserver.observe(document.getElementById('app'), { childList: true, subtree: true });
+    </script>
+  </body>
+</html>
