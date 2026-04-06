@@ -264,12 +264,6 @@ function renderStatusRail(tasks, selectedTaskId, state) {
       <div class="status-rail-list">
         ${taskItems || `<div class="empty-rail">작업 없음</div>`}
       </div>
-      ${subAgents.length ? `
-        <div class="sub-agents-section">
-          <p class="panel-kicker">Background Agents</p>
-          <div class="sub-agents-list">${subAgentItems}</div>
-        </div>
-      ` : ""}
     </aside>
   `;
 }
