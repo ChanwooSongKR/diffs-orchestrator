@@ -354,16 +354,31 @@ function renderComposer(state) {
   const placeholder = composer.placeholder ?? "Type a message to continue the workspace conversation.";
 
   return `
-    <form class="composer">
-      <label class="sr-only" for="workspace-composer-input">Workspace message</label>
-      <input
-        id="workspace-composer-input"
-        type="text"
-        value="${escapeHtml(composer.value ?? "")}"
-        placeholder="${escapeHtml(placeholder)}"
-      />
-      <button type="button" class="button button--primary">${escapeHtml(composer.actionLabel ?? "Send")}</button>
-    </form>
+    <div class="composer-wrap">
+      <form class="composer">
+        <button type="button" class="composer-attach-btn" aria-label="파일 첨부">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M13.5 7.5L7.5 13.5C6.1 14.9 3.9 14.9 2.5 13.5C1.1 12.1 1.1 9.9 2.5 8.5L8.5 2.5C9.4 1.6 10.9 1.6 11.8 2.5C12.7 3.4 12.7 4.9 11.8 5.8L5.8 11.8C5.3 12.3 4.6 12.3 4.1 11.8C3.6 11.3 3.6 10.6 4.1 10.1L9.5 4.7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <label class="sr-only" for="workspace-composer-input">Workspace message</label>
+        <input
+          id="workspace-composer-input"
+          type="text"
+          value="${escapeHtml(composer.value ?? "")}"
+          placeholder="${escapeHtml(placeholder)}"
+        />
+        <div class="llm-select-wrap">
+          <select class="llm-select" aria-label="모델 선택">
+            <option>Gemini 3 Pro</option>
+            <option>Gemini 3 Flash</option>
+            <option>GPT-5</option>
+            <option>GPT-4.1 mini</option>
+          </select>
+        </div>
+        <button type="button" class="composer-send-btn">${escapeHtml(composer.actionLabel ?? "Send")}</button>
+      </form>
+    </div>
   `;
 }
 
