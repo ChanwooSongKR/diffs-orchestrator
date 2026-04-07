@@ -20,9 +20,9 @@ function renderThumbnail(project) {
   if (!thumbnail) {
     return `
       <div class="folder-card__thumb folder-card__thumb--placeholder">
-        <span class="folder-card__thumb-eyebrow">No Output Yet</span>
-        <strong class="folder-card__thumb-title">New Project</strong>
-        <span class="folder-card__thumb-copy">Recent output thumbnail will appear here.</span>
+        <span class="folder-card__thumb-eyebrow">아직 결과물 없음</span>
+        <strong class="folder-card__thumb-title">새 프로젝트</strong>
+        <span class="folder-card__thumb-copy">메시지를 보내면 에이전트가 시작됩니다.</span>
       </div>
     `;
   }
@@ -38,11 +38,13 @@ function renderThumbnail(project) {
 
 function renderProjectCard(project) {
   const id = escapeHtml(project?.id);
-  const name = escapeHtml(project?.name || "Untitled project");
-  const updatedAt = escapeHtml(project?.updatedAt || "Recently updated");
-  const status = escapeHtml(project?.status || "Draft selection pending");
+  const name = escapeHtml(project?.name || "제목 없는 프로젝트");
+  const updatedAt = escapeHtml(project?.updatedAt || "최근 업데이트");
+  const status = escapeHtml(project?.status || "초안 선택 대기 중");
   const statusKind = escapeHtml(project?.statusKind || "default");
   const needsAttention = project?.statusKind === "waiting";
+
+  const badgeLabel = needsAttention ? "결정 필요" : statusKind === "default" ? "새 프로젝트" : "진행 중";
 
   return `
     <button
@@ -50,15 +52,15 @@ function renderProjectCard(project) {
       class="folder-card"
       data-action="open-project"
       data-project-id="${id}"
-      aria-label="Open project ${name}"
+      aria-label="프로젝트 열기: ${name}"
     >
       <span class="folder-card__tab" aria-hidden="true"></span>
       ${renderThumbnail(project)}
       <span class="folder-card__status-badge folder-card__status-badge--${statusKind}">
-        ${needsAttention ? "Needs Decision" : "In Progress"}
+        ${badgeLabel}
       </span>
       <span class="folder-card__title">${name}</span>
-      <span class="folder-card__meta">Updated ${updatedAt}</span>
+      <span class="folder-card__meta">업데이트 ${updatedAt}</span>
       <span class="folder-card__status">${status}</span>
     </button>
   `;
@@ -75,6 +77,29 @@ function renderEmptyState() {
   `;
 }
 
+function renderCreateProjectDialog() {
+  return `
+    <div class="dialog-backdrop" data-action="cancel-create-project">
+      <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialog-title">
+        <h2 class="dialog__title" id="dialog-title">새 프로젝트</h2>
+        <p class="dialog__body">광고 캠페인이나 브랜드 이름을 입력하세요.</p>
+        <input
+          id="create-project-input"
+          type="text"
+          class="dialog__input"
+          placeholder="예: Nike Winter Campaign"
+          maxlength="60"
+          autocomplete="off"
+        />
+        <div class="dialog__actions">
+          <button type="button" class="button button--secondary" data-action="cancel-create-project">취소</button>
+          <button type="button" class="button button--primary" data-action="submit-create-project">만들기</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
 export function renderProjectsView(state) {
   const projects = Array.isArray(state?.projects)
     ? [...state.projects].sort((left, right) => {
@@ -86,7 +111,7 @@ export function renderProjectsView(state) {
   const cards = projects.map(renderProjectCard).join("");
 
   return `
-    <section class="launcher" aria-label="Project management launcher">
+    <section class="launcher" aria-label="프로젝트 관리">
       <header class="launcher__topbar">
         <div class="launcher__heading">
           <h1>Projects</h1>
@@ -98,11 +123,12 @@ export function renderProjectsView(state) {
 
       <div class="launcher__body">
         <div class="launcher__summary">
-          <span class="launcher__summary-chip launcher__summary-chip--attention">Waiting for user first</span>
-          <span class="launcher__summary-chip">${projects.length} Projects</span>
+          <span class="launcher__summary-chip launcher__summary-chip--attention">결정 대기 중</span>
+          <span class="launcher__summary-chip">${projects.length}개 프로젝트</span>
         </div>
         ${projects.length > 0 ? `<div class="project-grid">${cards}</div>` : renderEmptyState()}
       </div>
     </section>
+    ${state?.createProjectModalOpen ? renderCreateProjectDialog() : ""}
   `;
 }
